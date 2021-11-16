@@ -38,7 +38,7 @@ connection.query(
   `
   CREATE TABLE IF NOT EXISTS  conversation_room (
     id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    time date NOT NULL DEFAULT current_timestamp()
+    time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   )
   `,
   (error) => {
