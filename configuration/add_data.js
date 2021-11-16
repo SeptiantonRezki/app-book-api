@@ -6,11 +6,74 @@ connection.query(`CREATE DATABASE IF NOT EXISTS db_book`, (error) => {
   if (error) throw error;
 });
 connection.query(
-  `CREATE TABLE IF NOT EXISTS book ( id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, author VARCHAR(100), country VARCHAR(100), image_link VARCHAR(200), language VARCHAR(100), link VARCHAR(200), pages INT(11), title VARCHAR(100), year YEAR);`,
+  `CREATE TABLE IF NOT EXISTS book (
+    id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    author varchar(100) NOT NULL,
+    country varchar(100) NOT NULL,
+    image_link varchar(200) NOT NULL,
+    language varchar(100) NOT NULL,
+    link varchar(200) NOT NULL,
+    pages int(11) NOT NULL,
+    title varchar(200) NOT NULL,
+    year year(4) NOT NULL
+  )`,
   (error) => {
     if (error) throw error;
   }
 );
+
+connection.query(
+  `
+  CREATE TABLE  IF NOT EXISTS user (
+    id int(11) NOT NULL  AUTO_INCREMENT PRIMARY KEY,
+    name varchar(250) NOT NULL
+  )
+  `,
+  (error) => {
+    if (error) throw error;
+  }
+);
+
+connection.query(
+  `
+  CREATE TABLE IF NOT EXISTS  conversation_room (
+    id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    time date NOT NULL DEFAULT current_timestamp()
+  )
+  `,
+  (error) => {
+    if (error) throw error;
+  }
+);
+connection.query(
+  `
+  CREATE TABLE IF NOT EXISTS message (
+    id_message int(11) NOT NULL NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_conversation int(11) ,
+    id_sender int(11) NOT NULL,
+    message varchar(500) NOT NULL,
+    time datetime NOT NULL DEFAULT current_timestamp(),
+    FOREIGN KEY (id_conversation) REFERENCES conversation_room (id),
+    FOREIGN KEY (id_sender) REFERENCES user (id)
+  )
+  `,
+  (error) => {
+    if (error) throw error;
+  }
+);
+connection.query(
+  `CREATE TABLE IF NOT EXISTS conversation_people (
+    id int(11) NOT NULL ,
+    id_people int(11) NOT NULL,
+    time date NOT NULL DEFAULT current_timestamp(),
+    FOREIGN KEY (id) REFERENCES conversation_room (id),
+    FOREIGN KEY (id_people) REFERENCES user (id)
+  )`,
+  (error) => {
+    if (error) throw error;
+  }
+);
+
 const addData = async () => {
   try {
     const dataString = await readFile(

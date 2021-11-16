@@ -4,14 +4,26 @@ class Message {
   static addMessage({ id_conversation, id_sender, message }) {
     return new Promise((resolve, reject) => {
       connection.query(
-        "INSERT INTO message (id_conversation, id_sender, message, time) VALUES (?, ?, ?, current_timestamp());",
-        [id_conversation, id_sender, message],
+        "INSERT INTO message (id_message, id_conversation, id_sender, message, time) VALUES (NULL, ?, ?, ?, current_timestamp());",
+        [id_conversation, id_sender === undefined ? 1 : id_sender, message === undefined ? "default message" : message],
         async (error, results, fields) => {
           if (error) reject(error);
-          let messages = await Message.getMesssagesConversation({
-            id_conversation,
+          var newMessage = await Message.getMessage({
+            id_message: results.insertId,
           });
-          resolve(messages);
+          resolve(newMessage[0]);
+        }
+      );
+    });
+  }
+  static getMessage({ id_message }) {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        "SELECT * FROM message WHERE id_message = ?;",
+        [id_message],
+        async (error, results, fields) => {
+          if (error) reject(error);
+          resolve(results);
         }
       );
     });
