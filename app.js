@@ -29,7 +29,7 @@ app.use("/api/v1/conversation", conversationRoutes);
 
 // HANDLE ERROR
 app.all("*", (req, res, next) => {
-  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+  next(new AppError(`Can't find on this server!`, 404));
 });
 
 app.use(globalErrorHandler);

@@ -16,7 +16,7 @@ connection.connect(function (err) {
 // const server = app.listen(80, "192.168.137.1",() => {
 //   console.log("server anda telah berjalan");
 // });
-const server = app.listen(5021,() => {
+const server = app.listen(55521,() => {
     console.log("server anda telah berjalan");
   }); 
 
