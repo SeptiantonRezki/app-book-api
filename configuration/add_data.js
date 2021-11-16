@@ -52,7 +52,7 @@ connection.query(
     id_conversation int(11) ,
     id_sender int(11) NOT NULL,
     message varchar(500) NOT NULL,
-    time datetime NOT NULL DEFAULT current_timestamp(),
+    time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_conversation) REFERENCES conversation_room (id),
     FOREIGN KEY (id_sender) REFERENCES user (id)
   )
@@ -65,7 +65,7 @@ connection.query(
   `CREATE TABLE IF NOT EXISTS conversation_people (
     id int(11) NOT NULL ,
     id_people int(11) NOT NULL,
-    time date NOT NULL DEFAULT current_timestamp(),
+    time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id) REFERENCES conversation_room (id),
     FOREIGN KEY (id_people) REFERENCES user (id)
   )`,
