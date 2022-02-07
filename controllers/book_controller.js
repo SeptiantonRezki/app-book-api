@@ -5,10 +5,15 @@ const path = require("path");
 const Book = require("../models/book_model");
 const AppError = require("./../utils/appError");
 const catchAsync = require("./../utils/catchAsync");
+const statusApp = require("../utils/status");
 
-// var url_image = "http://192.168.137.1/";
-// var url_image = "http://localhost:5021/";
-var url_image = "http://192.168.56.1:5021/";
+var url_image;
+
+if (statusApp === "development") {
+  url_image = "http://192.168.56.1:55521/";
+} else {
+  url_image = "server";
+}
 
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {

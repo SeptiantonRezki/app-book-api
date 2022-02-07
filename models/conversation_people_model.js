@@ -3,12 +3,16 @@ const connection = require("../configuration/db");
 // ORANG ORANG YANG MENERIMA UPDATE MESSAGE TERBARU
 // orang yang akan di tambahkan ke message group/ Message private
 class ConversationPeople {
-  static addConversationPeople({ id_conversation, id_people }) {
+  // UNTUK MENAMBAHKAN RUANG BICARA DAN MENAMBAHKAN SESEORANG DI DALAM RUAN TERSEBUT 
+
+  // menambahkan user baru di room || sudah ada maka tidak perlu menambahkan lagi
+  static addConversationPeople({ id_conversation, id_people, }) {
     return new Promise(async (resolve, reject) => {
       var checkUser = await this.chechkPeopleIsAddedInConversation({
         id_conversation,
         id_people,
       });
+      console.log(checkUser);
       if (checkUser.length == 0) {
         connection.query(
           "INSERT INTO conversation_people(id, id_people) VALUES (?, ?)",

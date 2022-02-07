@@ -4,7 +4,7 @@ class User {
   static addUser({ name }) {
     return new Promise((resolve, reject) => {
       connection.query(
-        "INSERT INTO user(id, nama) VALUES(NULL, ?)",
+        "INSERT INTO user(id, name) VALUES(NULL, ?)",
         [name],
         async (error, results, fields) => {
           if (error) reject(error);
@@ -26,6 +26,14 @@ class User {
           resolve(results);
         }
       );
+    });
+  }
+  static getUsers() {
+    return new Promise((resolve, reject) => {
+      connection.query("SELECT * FROM user", (error, results, fields) => {
+        if (error) reject(error);
+        resolve(results);
+      });
     });
   }
 }
